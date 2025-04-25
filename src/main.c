@@ -23,27 +23,23 @@ static void render(SDL_Renderer* const renderer) {
     SDL_RenderPresent(renderer);
 }
 
-int main() {
+int main(void) {
     if (!SDL_Init(SDL_INIT_VIDEO)) {
-        SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Could not initialize SDL: %s\n",
-                     SDL_GetError());
+        SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Could not initialize SDL: %s\n", SDL_GetError());
         return 1;
     }
 
     SDL_Window* window = NULL;
     SDL_Renderer* renderer = NULL;
-    SDL_CreateWindowAndRenderer("gemu", WINDOW_WIDTH, WINDOW_HEIGHT, 0, &window,
-                                &renderer);
+    SDL_CreateWindowAndRenderer("gemu", WINDOW_WIDTH, WINDOW_HEIGHT, 0, &window, &renderer);
 
     if (window == NULL) {
-        SDL_LogError(SDL_LOG_CATEGORY_VIDEO, "Could not create window: %s\n",
-                     SDL_GetError());
+        SDL_LogError(SDL_LOG_CATEGORY_VIDEO, "Could not create window: %s\n", SDL_GetError());
         SDL_Quit();
         return 1;
     }
 
-    SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED,
-                          SDL_WINDOWPOS_CENTERED);
+    SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 
     bool exit = false;
 
