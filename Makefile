@@ -12,7 +12,7 @@ INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 DEBUG_FLAGS := -g3 -O0 -ggdb3
-CPPFLAGS := $(INC_FLAGS) `pkg-config --cflags sdl3` -O3 --std=c99 -Wall -Wextra -Wpedantic
+CPPFLAGS := $(INC_FLAGS) `pkg-config --cflags sdl3` -O3 --std=c99 -Wall -Wextra
 LDFLAGS := `pkg-config --libs sdl3`
 
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
