@@ -1,3 +1,6 @@
+.cache/
 .direnv/
 build/
 /result
+Testing/
+.local/

@@ -1,18 +1,21 @@
-#ifndef FRONTEND_H
-#define FRONTEND_H
+#ifndef GEMU_FRONTEND_H
+#define GEMU_FRONTEND_H
 
-#include "SDL3/SDL_render.h"
-#include "core/game_boy.h"
-typedef struct State {
+#include "game_boy.h"
+#include <SDL3/SDL.h>
+
+typedef struct {
     GameBoy gb;
     int window_width;
     int window_height;
-    double current_time;
-    double time_accumulator;
+    double cycle_accumulator;
+    double vframe_time;
+    int div_cycle_counter;
+    int tima_cycle_counter;
     bool quit;
-    SDL_Texture* texture;
+    SDL_Texture *screen_texture;
 } State;
 
-void frame(State* restrict state, SDL_Renderer* restrict renderer);
+void run_until_quit(State *state, SDL_Renderer *renderer);
 
 #endif

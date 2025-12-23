@@ -1,15 +1,10 @@
 {
-  pkgs ? import <nixpkgs> { },
+  gemu,
   mkShell,
-  xxd,
   clang-tools,
-  ...
 }:
 mkShell {
-  inputsFrom = [ (pkgs.callPackage ./default.nix { }) ];
+  inputsFrom = [ gemu ];
 
-  nativeBuildInputs = [
-    clang-tools
-    xxd
-  ];
+  packages = [ clang-tools ];
 }

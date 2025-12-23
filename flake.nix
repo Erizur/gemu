@@ -8,15 +8,30 @@
   };
 
   outputs =
-    inputs@{ flake-parts, ... }:
+    inputs@{
+      self,
+      flake-parts,
+      ...
+    }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = import inputs.systems;
 
       perSystem =
-        { pkgs, ... }:
         {
-          packages.default = pkgs.callPackage ./default.nix { };
-          devShells.default = pkgs.callPackage ./shell.nix { };
+          self',
+          pkgs,
+          system,
+          ...
+        }:
+        {
+          packages = {
+            gemu = pkgs.callPackage ./default.nix { };
+            default = self'.packages.gemu;
+          };
+
+          devShells.default = pkgs.callPackage ./shell.nix {
+            inherit (self'.packages) gemu;
+          };
         };
     };
 }

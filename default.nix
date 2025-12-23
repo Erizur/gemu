@@ -1,30 +1,36 @@
 {
-  lib,
   stdenv,
-  pkg-config,
+  lib,
+  cmake,
   sdl3,
-  ...
+  unity-test,
+  cjson,
+  ruby,
 }:
-stdenv.mkDerivation {
+stdenv.mkDerivation (finalAttrs: {
   pname = "gemu";
-  version = "0.1.0";
+  version = "main";
 
   src = lib.cleanSource ./.;
 
-  installPhase = ''
-    runHook preInstall
-    install -Dm755 "build/gemu" -t "$out/bin"
-    runHook postInstall
-  '';
-
   nativeBuildInputs = [
-    pkg-config
+    cmake
     sdl3
+    unity-test
+    cjson
+    ruby
   ];
+
+  cmakeFlags = [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
+  enableParallelBuilding = true;
+  doCheck = true;
 
   meta = with lib; {
     description = "A Game Boy emulator written in C.";
     homepage = "https://github.com/Grazen0/gemu";
-    license = licenses.mit;
+    license = licenses.gpl3;
   };
-}
+})
